@@ -1,0 +1,20 @@
+.buttonDiv {
+    background-color: black;
+    width: 25%;
+    height: 25%;
+    padding: 2px;
+}
+
+.button {
+    font-size: larger;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.profile_button{
+    align-self: right;
+    radius: 50%
+}
