@@ -7,24 +7,22 @@
     <title>Sell Page</title>
 </head>
 <body>
-    <a href="https://cargos.me">
-        <button class="back-button">Go Back</button>
+    <a href="index.html">
+        <button class="back-button">Go back</button>
     </a>
 
-<?php
-    $servername = "localhost";
-    $user = "root";
-    $password = "piWJbQv5Ksd8Yk";
-    $dbname = "CarGos";
+    <?php
+        $servername = "localhost";
+        $user = "root";
+        $password = "piWJbQv5Ksd8Yk";
+        $dbname = "CarGos";
 
-    $conn = mysqli_connect($servername, $user, $password, $dbname);
+        $conn = mysqli_connect($servername, $user, $password, $dbname);
     
-    if(!$conn) {
-        die("Connection failed " . mysqli_connect_error());
-    }
-
-    
-?>
+        if(!$conn) {
+            die("Connection failed " . mysqli_connect_error());
+        }
+    ?>
 <h1>Sell Page</h1>
     <div class="sellMainDiv">
         <form method="post" action="sell_page.php" class="sellPageForm">
@@ -32,6 +30,12 @@
         <div class="sellButtonArray">
             <label for="listingPrice" class="listingLabel price">Listing Price: $</label>
             <input type="number" name="listingPrice" id="listingPrice" min="1" max="99999999" step="1" placeholder="0" required><br>
+            <label for="listingYear" class="listingLabel year">Listing Year: </label>
+            <input type="number" name="listingYear" id="listingYear" min="1900" max="2023" step="1" placeholder="2022" required><br>
+            <label for="listingMake" class="listingLabel make">Listing Make: </label>
+            <input type="text" name="listingMake" id="listingMade"><br>
+            <label for="listingModel" class="listingLabel model">Listing Model: </label>
+            <input type="text" name="listingModel" id="listingModel"><br>
             <label for="listingDesc" class="listingLabel desc">Listing Description: </label><br>
             <input type="text" name="listingDesc" id="listingDesc"><br>
             <input type="submit" value="Create Listing">
@@ -41,9 +45,12 @@
                 $listingPrice = $_POST["listingPrice"];
                 $listingDesc = $_POST["listingDesc"];
                 $listingDate = date("Y-m-d");
+                $listingMake = $_POST["listingMake"];
+                $listingModel = $_POST["listingModel"];
+                $listingYear = $_POST["listingYear"];
 
-                $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate) VALUES(?, ?, ?, ?, ?);");
-                $insertListing->bind_param("iiiss", $listingID, $userID, $listingPrice, $listingDesc, $listingDate);
+                $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate, ListingMake, ListingModel, ListingYear) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+                $insertListing->bind_param("iiissssi", $listingID, $userID, $listingPrice, $listingDesc, $listingDate, $listingMake, $listingModel, $listingYear);
                 $insertListing->execute();
             ?>
         </div>
