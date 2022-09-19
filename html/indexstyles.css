@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .buttonDiv {
     background-color: black;
     width: 25%;
@@ -17,4 +21,57 @@
 .profile_button{
     align-self: right;
     radius: 50%
+}
+
+#login-popup {
+    display: none;
+    position:fixed;
+    border: 3px solid gray;
+    z-index: 9;
+}
+
+#login-popup .container {
+    max-width: 200px;
+    padding: 15px;
+    background-color: white;
+}
+
+#login-popup .container input[type=text], #login-popup .container input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 10px 30px -10px;
+    border: none;
+    background: rgb(226, 226, 226);
+}
+
+#login-popup .container .login-popup-btn {
+    background-color: black;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+#login-popup .container .createAccLink {
+    position: relative;
+    text-align: center;
+    margin: 10px 12px;
+    padding: 16px 20px;
+    width: 50%;
+}
+
+#login-popup .container label, #login-popup .container h1 {
+    margin-left: -10px;
+}
+
+#login-popup .container input[type=text]:focus , #login-popup .container input[type=password]:focus {
+    background-color: rgb(185, 185, 185);
+    outline: none;
+}
+
+#login-popup .container .login-popup-btn:hover, .login-button:hover {
+    opacity: 1;
 }

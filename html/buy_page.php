@@ -1,10 +1,14 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link ref="stylesheet" rel="indexstyles.css">
+    <link rel="stylesheet" href="indexstyles.css">
     <title>Buy Page</title>
 </head>
 
@@ -50,8 +54,8 @@
             </ul>
         </nav>  
 </header> -->
-
-<body>
+<!-- To keep track of a user login and states regarding user login, use PHP sessions** -->
+<body style="box-sizing: border-box">
     <a href="index.html">
         <button class="back-button">Go back</button>
     </a>
@@ -59,12 +63,29 @@
     <div class="buyMainDiv">
         <div class="buyButtonArray">
             <!-- Need to figure out how to check if someone is logged in and change button depending on that https://stackoverflow.com/questions/43714563/php-mysql-change-button-text-on-condition-->
-            <a href="account_info.php">
-                <button class="account-button login">Login</button>
-                <div class="login-dropdown">
-                    <!-- Could maybe create a hoverable login? https://www.w3schools.com/howto/howto_css_dropdown.asp -->
-                </div>
-            </a>
+            <?php
+            if(!isset($_SESSION["username"])) //Checks to see if there's a variable in the session assigned to username
+                echo '<button class="login-button login" onclick="loginPopup()">Login</button>'; //if not then show login button
+            else { //else show account info
+                echo "joe";
+            }
+            ?>
+            <div id="login-popup"> <!-- Use session_destroy() on log out -->
+                <form action="buy_page.php" class="login-popup container">
+                    <h1><i>CarGos</i> Login</h1>
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Email" name="email" required>
+
+                    <label for="pass"><b>Password</b></label>
+                    <input type="password" placeholder="Password" name="pass" required>
+
+                    <button type="submit" class="login-popup-btn login">Login</button>
+                    <button type="button" class="login-popup-btn cancel" onclick="loginPopdown()">X</button>
+                    <a class="createAccLink" href="create_account.php">Create an account!</a>
+                </form>
+            </div>
+            <!-- Create some sort of pop up when login button is clicked? https://www.w3schools.com/howto/howto_js_popup_form.asp-->
         </div>
 
         <!-- Mockup for grabbing listing data from db -->
@@ -94,6 +115,23 @@
             ?>
         </div>
     </div>
+    <script>
+        function loginPopup() {
+            document.getElementById("login-popup").style.display = "block";
+        }
+
+        function loginPopdown() {
+            document.getElementById("login-popup").style.display = "none";
+        }
+
+        document.addEventListener('mouseup', function(e) {
+            var popup_div = document.getElementById("login-popup");
+            if(!popup_div.contains(e.target)) {
+                popup_div.style.display = "none";
+            }
+        })
+    </script>
+
     <?php
         $conn->close();
     ?>
