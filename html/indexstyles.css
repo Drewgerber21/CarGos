@@ -4,8 +4,7 @@ body {
 
 .buttonDiv {
     background-color: black;
-    width: 25%;
-    height: 25%;
+    width: auto;
     padding: 2px;
 }
 
@@ -18,16 +17,26 @@ body {
     justify-content: center;
 }
 
-.profile_button{
-    align-self: right;
-    radius: 50%
+.sellInputs {
+    visibility: hidden;
+}
+
+.mainAccountDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.accountButtonDiv .accountButtonArray {
+    display: flex;
+    justify-content: flex-end;
 }
 
 #login-popup {
+    height: auto;
     display: none;
-    position:fixed;
+    position: fixed;
     border: 3px solid gray;
-    z-index: 9;
+    z-index: 3;
 }
 
 #login-popup .container {
@@ -44,7 +53,7 @@ body {
     background: rgb(226, 226, 226);
 }
 
-#login-popup .container .login-popup-btn {
+.login-popup-btn {
     background-color: black;
     color: white;
     padding: 16px 20px;
@@ -55,7 +64,7 @@ body {
     opacity: 0.8;
 }
 
-#login-popup .container .createAccLink {
+.createAccLink {
     position: relative;
     text-align: center;
     margin: 10px 12px;

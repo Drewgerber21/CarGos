@@ -60,27 +60,40 @@ session_start();
         <button class="back-button">Go back</button>
     </a>
     <h1>Buy Page</h1>   
-    <div class="buyMainDiv">
-        <div class="buyButtonArray">
+    <div class="accountButtonDiv">
+        <div class="accountButtonArray">
             <!-- Need to figure out how to check if someone is logged in and change button depending on that https://stackoverflow.com/questions/43714563/php-mysql-change-button-text-on-condition-->
-            <?php
+            <?php //https://www.w3schools.com/php/php_sessions.asp
             if(!isset($_SESSION["username"])) //Checks to see if there's a variable in the session assigned to username
                 echo '<button class="login-button login" onclick="loginPopup()">Login</button>'; //if not then show login button
             else { //else show account info
-                echo "joe";
+                echo "Welcome&nbsp;<a href='account_info.php?username=" . $_SESSION["username"] . "'</a> " . $_SESSION["username"] . "!";
             }
             ?>
             <div id="login-popup"> <!-- Use session_destroy() on log out -->
-                <form action="buy_page.php" class="login-popup container">
+                <form action="buy_page.php" class="login-popup container" method="post">
                     <h1><i>CarGos</i> Login</h1>
 
-                    <label for="email"><b>Email</b></label>
-                    <input type="text" placeholder="Email" name="email" required>
+                    <label for="usernames"><b>Username</b></label>
+                    <input type="text" placeholder="Username" name="user" id="user" required>
 
                     <label for="pass"><b>Password</b></label>
-                    <input type="password" placeholder="Password" name="pass" required>
+                    <input type="password" placeholder="Password" name="pass" id="pass" required>
 
                     <button type="submit" class="login-popup-btn login">Login</button>
+                    <?php 
+                        $username = $_POST["user"];
+                        $password = $_POST["pass"];
+
+                        $findUser = "SELECT * FROM UserInfo WHERE UserName = '" . $username . "' AND UserPass ='" . $password . "';";
+                        $result = mysqli_query($conn, $findUser);
+                        if(mysqli_num_rows($result) > 0) {
+                            $_SESSION["username"] = $username;
+                            echo "<meta http-equiv='refresh' content='0'>";
+                        } else if (!isset($_SESSION["user"]) && $_SERVER['REQUEST_METHOD'] == "POST") {
+                            echo "<script type='text/javascript'>alert('Wrong username or password!');</script>";
+                        }
+                    ?>
                     <button type="button" class="login-popup-btn cancel" onclick="loginPopdown()">X</button>
                     <a class="createAccLink" href="create_account.php">Create an account!</a>
                 </form>
@@ -96,15 +109,17 @@ session_start();
                 if(mysqli_num_rows($result) > 0) {
                     echo "<table class=\"listingTable\">
                     <tr><th>Listing Price</th>
+                    <th>Listing Year</th>
                     <th>Listing Make</th>
                     <th>Listing Model</th>
                     <th>Listing Description</th>
-                    <th>Listing Date</th>";
+                    <th>Listing Date</th></tr>";
                 }
 
                 while($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>
                     <td>" . $row["ListingPrice"] . "</a></td>" .
+                    "<td>" . $row["ListingYear"] . "</td>" .
                     "<td><a href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">" . $row["ListingMake"] . "</a></td>" .
                     "<td>" . $row["ListingModel"] . "</td" .
                     "<td>" . $row["ListingDesc"] . "</td>" .
@@ -127,7 +142,7 @@ session_start();
         document.addEventListener('mouseup', function(e) {
             var popup_div = document.getElementById("login-popup");
             if(!popup_div.contains(e.target)) {
-                popup_div.style.display = "none";
+                loginPopdown();
             }
         })
     </script>

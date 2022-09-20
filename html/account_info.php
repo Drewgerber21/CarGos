@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,10 @@
     <title>Your Account</title>
 </head>
 <body>
-    <h1>AAAAAAAAAAAA</a>
+    <input name="back" onclick="history.back()" type="submit" value="Go back">
+    <?php
+        $username = $_GET["username"];
+        echo $username . "'s page";
+    ?>
 </body>
 </html>
