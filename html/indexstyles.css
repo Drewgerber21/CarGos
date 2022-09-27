@@ -2,17 +2,100 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.column-wrapper {
+    height: inherit;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.column {
+    border: 40px;
+    border-color: black;
+    background: #1B3B6F;
+    padding: 5px;
+    width: 250px;
+    height: 300px;
+    margin: 20px;
+
+    line-height: 150px;
+    color: white;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+}
+
+.pageBody {
+    margin:0;
+}
+
 .pageHeader {
-    background-color: #2e53b0;
+    background-color: #21295C;
     padding: 10px;
 }
 
 .pageNav {
-    background-color: #4b6fc9;
+    display: flex;
+    background-color: #1B3B6F;
     padding: 5px;
 }
 
+.listingTable {
+    line-height: 30px;
+}
+
+.pageNav .login {
+    margin-left: auto;
+    margin-right: 150px;
+}
+
+.navButtonDiv {
+    align-items: auto;
+    vertical-align: top;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+.navButton {
+    font-size: larger;
+    color: white;
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.navButton:hover {
+    color: rgb(219, 219, 219);
+}
+
+
 .title {
+    color: white;
+}
+
+.homeMainPage {
+    min-height: 750px;
+    padding: 5px;
+}
+
+.homeMainPageTitle {
+    padding: 5px;
+}
+
+.homeMainPageBody {
+    padding: 5px;
+}
+
+.homeMainPageFooter {
+    background-color: #21295C;
+    padding: 5px;
+}
+
+.homeMainPageFooterText {
     color: white;
 }
 
@@ -26,7 +109,7 @@ body {
     font-size: larger;
 }
 
-.center {
+.center { /* do we have a center class? */
     display: flex;
     justify-content: center;
 }
@@ -38,11 +121,6 @@ body {
 .mainAccountDiv {
     display: flex;
     flex-direction: column;
-}
-
-.accountButtonDiv .accountButtonArray {
-    display: flex;
-    justify-content: flex-end;
 }
 
 #login-popup {

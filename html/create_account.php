@@ -13,7 +13,7 @@ session_start();
     <link rel="stylesheet" href="indexstyles.css">
 </head>
 
-<body>
+<body  class="pageBody">
     <input name="back" onclick="history.back()" type="submit" value="Go back">
 
     <?php

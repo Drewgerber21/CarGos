@@ -26,12 +26,10 @@ if (!$conn) {
 }
 ?>
 
-<body style="box-sizing: border-box">
-    <a href="index.html">
-        <button class="back-button">Go back</button>
-    </a>
-    <h1>Buy Page</h1>
-    <?php include("login_button.php"); ?>
+<body class="pageBody" style="box-sizing: border-box">
+    <body>
+        <?php include("nav_bar.php"); ?>
+    </body>
 
     <!-- Mockup for grabbing listing data from db -->
     <div class="buyTempDiv">
@@ -40,12 +38,14 @@ if (!$conn) {
         $result = mysqli_query($conn, $selectListing);
         if (mysqli_num_rows($result) > 0) {
             echo "<table class=\"listingTable\">
-                    <tr><th>Listing Price</th>
+                <tr>
+                    <th>Listing Price</th>
                     <th>Listing Year</th>
                     <th>Listing Make</th>
                     <th>Listing Model</th>
                     <th>Listing Description</th>
-                    <th>Listing Date</th></tr>";
+                    <th>Listing Date</th>
+                </tr>";
         }
 
         while ($row = mysqli_fetch_assoc($result)) {

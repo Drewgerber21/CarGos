@@ -13,11 +13,7 @@ session_start();
     <link rel="stylesheet" href="indexstyles.css">
 </head>
 
-<body>
-    <a href="index.html">
-        <button class="back-button">Go back</button>
-    </a>
-
+<body  class="pageBody">
     <?php
     $servername = "localhost";
     $user = "root";
@@ -30,9 +26,11 @@ session_start();
         die("Connection failed " . mysqli_connect_error());
     }
     ?>
-    <h1>Sell Page</h1>
+    <body>
+        <?php include("nav_bar.php"); ?>
+    </body>
+
     <div class="sellMainDiv">
-        <?php include("login_button.php"); ?>
         <form method="post" action="sell_page.php" class="sellPageForm">
             <!-- Creating a create listing mockup-->
             <div class="sellInputs" id="sellInputs">
@@ -68,6 +66,8 @@ session_start();
     <?php
     if (isset($_SESSION["username"])) {
         echo "<script type='text/javascript'>document.getElementById('sellInputs').style.visibility='visible';</script>";
+    } else {
+        echo "<p>You are not logged in. Please log in to create a listing!</p>";
     }
     ?>
     <?php
