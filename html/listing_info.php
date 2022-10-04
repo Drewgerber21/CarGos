@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="indexstyles.css">
     <?php 
         echo "<title>" . $_GET["listingMake"] . " " . $_GET["listingModel"] . " for sale!</title>";
     ?>
@@ -20,32 +21,24 @@
         die("Connection failed " . mysqli_connect_error());
     }
 ?>
-<body>
-    <a href="buy_page.php">
-        <button class="back-button">Go back</button>
-    </a>
+<body class="pageBody" style="box-sizing: border-box">
+    <?php include("nav_bar.php"); ?>
+
     <div>
         <?php
             $listingID = $_GET["listingID"];
             $selectListing = "SELECT * FROM ListingInfo WHERE ListingID = " . $listingID . ";";
             $result = mysqli_query($conn, $selectListing);
-            if(mysqli_num_rows($result) > 0) {
-                echo "<table class=\"listingTable\">
-                <tr><th>Listing Price</th>
-                <th>Listing Make</th>
-                <th>Listing Model</th>
-                <th>Listing Description</th>
-                <th>Listing Date</th>";
-            }
-
-            while($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>
-                <td>" . $row["ListingPrice"] . "</td>" .
-                "<td>" . $row["ListingMake"] . "</td>" .
-                "<td>" . $row["ListingModel"] . "</td" .
-                "<td>" . $row["ListingDesc"] . "</td>" .
-                "<td>" . $row["ListingDate"] . "</td>"
-                . "</tr>";
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "
+                    <div>
+                        <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </h1>
+                        <h2>Price: $"  . $row["ListingPrice"] . " </h2>
+                        <img src=\"defaultCarImageSquare.jpg\" alt=\"Default Image\" style=\"width:400px;height:400px;\">
+                        <p> " . $row["ListingDesc"] . " </p>
+                        <p>Posted " . $row["ListingDate"] . " </p>
+                    </div>
+                ";
             }
             echo "</table>";
         ?>
@@ -53,5 +46,11 @@
     <?php
         $conn->close();
     ?>
+    <div class="homeMainPageFooter">
+      <p class="homeMainPageFooterText">People who worked on this project:</p>
+      <p class="homeMainPageFooterText">Eddie</p>
+      <p class="homeMainPageFooterText">Jose</p>
+      <p class="homeMainPageFooterText">Drew</p>
+    </div>
 </body>
 </html>

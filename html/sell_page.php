@@ -39,13 +39,45 @@ session_start();
                 <label for="listingYear" class="listingLabel year">Listing Year: </label>
                 <input type="number" name="listingYear" id="listingYear" min="1900" max="2023" step="1" placeholder="2022" required><br>
                 <label for="listingMake" class="listingLabel make">Listing Make: </label>
+                <select name="listingMake" id="listingMake"> <!-- why listingMade?? and not listingMake?? - Jose-->
+                    <option value="Toyota">Toyota</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Chevy">Chevy</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Hyundai">Hyundai</option>
+                </select>
+                <br><br>
+                <!--
                 <input type="text" name="listingMake" id="listingMade"><br>
+                -->
+                <!-- Probably want to grab value of year and make then populate an optgroup with some parsed json from an api call using fetch -->
+                <!-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch -->
                 <label for="listingModel" class="listingLabel model">Listing Model: </label>
+                <select name="listingModel" id="listingModel">
+                    <optgroup label = "Toyota">
+                        <option value="Camry">Camry</option>
+                        <option value="Corolla">Corolla</option>
+                        <option value="Tacoma">Tacoma</option>
+                        <option value="Tundra">Tundra</option>
+                        <option value="Prius">Prius</option>
+                    <optgroup label = "Ford">
+                        <option value="F150">F150</option>   
+                    <optgroup label = "Volkswagen">    
+                        <option value="Jetta">Jetta</option>
+                <!-- ADD MORE MAKES AND MODELS
+                     ADD A WAY TO CHECK IF THE MODEL'S OPTGROUP LABEL MATCHES THE listingMake
+                -->
+                </select>
+                <br><br>
+                <!--
                 <input type="text" name="listingModel" id="listingModel"><br>
+                -->
                 <label for="listingDesc" class="listingLabel desc">Listing Description: </label><br>
-                <input type="text" name="listingDesc" id="listingDesc"><br>
+                <textarea name="listingDesc" id="listingDesc"></textarea>
                 <input type="submit" value="Create Listing">
-                <?php
+            <?php
                 $listingID = null;
                 $uidQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT UserID FROM UserInfo WHERE UserName = '" . $_SESSION["username"] . "';"));
                 $userID = $uidQuery[0];
@@ -59,7 +91,7 @@ session_start();
                 $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate, ListingMake, ListingModel, ListingYear) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
                 $insertListing->bind_param("iiissssi", $listingID, $userID, $listingPrice, $listingDesc, $listingDate, $listingMake, $listingModel, $listingYear);
                 $insertListing->execute();
-                ?>
+            ?>
             </div>
         </form>
     </div>

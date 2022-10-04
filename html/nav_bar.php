@@ -54,20 +54,27 @@
             echo "<button class=\"navButton\" onclick='accountPopup()'>Welcome " . $_SESSION["username"] . "</button>";
         ?>
             <div id="account-popup">
+                <div class="account-container">
                 <?php
-                echo "<button type='button' class='account-popup settings' onclick='location.href=\"account_info.php?username=" . $_SESSION["username"] . "\"'>Account Settings</button>";
-                echo "<button type='button' class='account-popup listings'>Your Listings</button>"; //user listings
+                echo "<button type='button' class='account-popup-btn settings' onclick='location.href=\"account_info.php?username=" . $_SESSION["username"] . "\"'>Account Settings</button>";
+                echo "<button type='button' class='account-popup-btn listings'>Your Listings</button>"; //user listings
                 ?>
                 <form method="post">
-                    <input name="logout" type="submit" value="Logout">
+                    <input name="logoutcheck" type="hidden" value="logoutcheck">
+                    <input name="logout" class="account-popup-btn logout" type="submit" value="Logout">
                     <?php
-                    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST["logoutcheck"])) {
                         unset($_SESSION["username"]);
                         session_destroy();
-                        echo "<script type='text/javascript'>setTimeout(\"window.history.go(-2)\", 500);</script>";
+                        //if on account_info probably just redirect to index.php
+                        if(strpos($_SERVER['REQUEST_URI'], "account_info.php")) //checks to see if account_info is in the url string
+                            header("Location: https://cargos.me/");
+                        else
+                            echo "<script type='text/javascript'>setTimeout(\"window.history.go(-1)\", 500);</script>";
                     }
                     ?>
                 </form>
+                </div>
             </div>
         <?php } ?>
     </div>
@@ -79,6 +86,17 @@
     function accountPopup() {
         document.getElementById("account-popup").style.display = "block";
     }
+
+    function accountPopdown() {
+        document.getElementById("account-popup").style.display = "none";
+    }
+
+    document.addEventListener('mouseup', function(e) {
+        var account_div = document.getElementById("account-popup");
+        if(!account_div.contains(e.target)) {
+            accountPopdown();
+        }
+    })
 
     function loginPopup() {
         document.getElementById("login-popup").style.display = "block";

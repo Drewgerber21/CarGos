@@ -31,17 +31,35 @@ if (!$conn) {
         <?php include("nav_bar.php"); ?>
     </body>
     
+    <!-- Displays listings in a grid -->
     <div class="column-wrapper">
-		<div class="column">1</div>
-		<div class="column">2</div>
-		<div class="column">3</div>
-        <div class="column">4</div>
-        <div class="column">5</div>
-		<div class="column">6</div>
-		<div class="column">7</div>
-        <div class="column">8</div>
-        <div class="column">9</div>
-	</div>
+        <?php
+            $selectListing = "SELECT * FROM ListingInfo";
+            $result = mysqli_query($conn, $selectListing);
 
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "
+                    <div class=\"column\"> 
+                        <div class=\"columnImageDiv\">
+                            <img src=\"defaultCarImageSquare.jpg\" alt=\"Default Image\" style=\"width:400px;height:400px;\">
+                        </div>
+                        <div class=\"columnTextDiv\">
+                            <a class=\"columnText\" href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </a>
+                            <p class=\"columnText\">$"  . $row["ListingPrice"] . " </p>
+                        </div>
+                    </div>";
+            }
+            echo "</table>";
+        ?>
+        <?php
+            $conn->close();
+        ?>
+    </div>
+    <div class="homeMainPageFooter">
+      <p class="homeMainPageFooterText">People who worked on this project:</p>
+      <p class="homeMainPageFooterText">Eddie</p>
+      <p class="homeMainPageFooterText">Jose</p>
+      <p class="homeMainPageFooterText">Drew</p>
+    </div>
 </body>
 </html>
