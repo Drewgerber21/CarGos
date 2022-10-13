@@ -31,7 +31,7 @@ session_start();
     </body>
 
     <div class="sellMainDiv">
-        <form method="post" action="sell_page.php" class="sellPageForm">
+        <form method="post" action="sell_page.php" class="sellPageForm" enctype="multipart/form-data">
             <!-- Creating a create listing mockup-->
             <div class="sellInputs" id="sellInputs">
                 <label for="listingPrice" class="listingLabel price">Listing Price: $</label>
@@ -40,13 +40,20 @@ session_start();
                 <input type="number" name="listingYear" id="listingYear" min="1900" max="2023" step="1" placeholder="2022" required><br>
                 <label for="listingMake" class="listingLabel make">Listing Make: </label>
                 <select name="listingMake" id="listingMake"> <!-- why listingMade?? and not listingMake?? - Jose-->
-                    <option value="Toyota">Toyota</option>
-                    <option value="Ford">Ford</option>
-                    <option value="Volkswagen">Volkswagen</option>
-                    <option value="Audi">Audi</option>
-                    <option value="Chevy">Chevy</option>
-                    <option value="Honda">Honda</option>
-                    <option value="Hyundai">Hyundai</option>
+                    <script>
+                        var selectMake = document.getElementById("listingMake");
+                        fetch("https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json")
+                        .then(result => result.json())
+                        .then(data => {
+                            for(let i = 0; i < data.Results.length; i++) {
+                                var option = document.createElement("option");
+                                option.value = data.Results[i].MakeName;
+                                option.text = data.Results[i].MakeName;
+                                selectMake.appendChild(option);
+                            }
+                        })
+                        .catch(err => {console.log(err)});
+                    </script>
                 </select>
                 <br><br>
                 <!--
@@ -54,18 +61,28 @@ session_start();
                 -->
                 <!-- Probably want to grab value of year and make then populate an optgroup with some parsed json from an api call using fetch -->
                 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch -->
+
                 <label for="listingModel" class="listingLabel model">Listing Model: </label>
                 <select name="listingModel" id="listingModel">
-                    <optgroup label = "Toyota">
-                        <option value="Camry">Camry</option>
-                        <option value="Corolla">Corolla</option>
-                        <option value="Tacoma">Tacoma</option>
-                        <option value="Tundra">Tundra</option>
-                        <option value="Prius">Prius</option>
-                    <optgroup label = "Ford">
-                        <option value="F150">F150</option>   
-                    <optgroup label = "Volkswagen">    
-                        <option value="Jetta">Jetta</option>
+                    <script>
+                        document.getElementById("listingMake").onchange = findModels
+                        function findModels() {
+                            document.getElementById("listingModel").innerHTML = "";
+                            console.log(document.getElementById("listingMake").value + " test " + document.getElementById("listingYear").value);
+                            var selectModel = document.getElementById("listingModel");
+                            fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/' + document.getElementById("listingMake").value + '/modelyear/' + document.getElementById("listingYear").value +'?format=json')
+                            .then(response => response.json())
+                            .then(data => {
+                                for(let i = 0; i < data.Results.length; i++) {
+                                    var model = document.createElement("option");
+                                    model.value = data.Results[i].Model_Name;
+                                    model.text = data.Results[i].Model_Name;
+                                    selectModel.appendChild(model);
+                                }
+                            })
+                            .catch(err => { console.log(err) });
+                        }
+                    </script>
                 <!-- ADD MORE MAKES AND MODELS
                      ADD A WAY TO CHECK IF THE MODEL'S OPTGROUP LABEL MATCHES THE listingMake
                 -->
@@ -74,24 +91,31 @@ session_start();
                 <!--
                 <input type="text" name="listingModel" id="listingModel"><br>
                 -->
+                <label for="listingPhoto" class="listingLabel photo">Listing Photo: </label><br>
+                <input type="file" name="listingPhoto" accept="image/*"><br><br>
                 <label for="listingDesc" class="listingLabel desc">Listing Description: </label><br>
-                <textarea name="listingDesc" id="listingDesc"></textarea>
+                <textarea name="listingDesc" id="listingDesc"></textarea><br>
                 <input type="submit" value="Create Listing">
-            <?php
-                $listingID = null;
-                $uidQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT UserID FROM UserInfo WHERE UserName = '" . $_SESSION["username"] . "';"));
-                $userID = $uidQuery[0];
-                $listingPrice = $_POST["listingPrice"];
-                $listingDesc = $_POST["listingDesc"];
-                $listingDate = date("Y-m-d");
-                $listingMake = $_POST["listingMake"];
-                $listingModel = $_POST["listingModel"];
-                $listingYear = $_POST["listingYear"];
+                <?php
+                    if(move_uploaded_file($_FILES["image"]["temp_listingPhoto"],__DIR__.'/../../Listing_Photos/' . $_FILES["image"]["listingPhoto"])){
+                        echo "<script> console.log(\"it worked\"); </script>";
+                    } else {
+                        echo "<script> console.log(\"it didn't work\"); </script>";
+                    }
+                    $listingID = null;
+                    $uidQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT UserID FROM UserInfo WHERE UserName = '" . $_SESSION["username"] . "';"));
+                    $userID = $uidQuery[0];
+                    $listingPrice = $_POST["listingPrice"];
+                    $listingDesc = $_POST["listingDesc"];
+                    $listingDate = date("Y-m-d");
+                    $listingMake = $_POST["listingMake"];
+                    $listingModel = $_POST["listingModel"];
+                    $listingYear = $_POST["listingYear"];
 
-                $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate, ListingMake, ListingModel, ListingYear) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-                $insertListing->bind_param("iiissssi", $listingID, $userID, $listingPrice, $listingDesc, $listingDate, $listingMake, $listingModel, $listingYear);
-                $insertListing->execute();
-            ?>
+                    $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate, ListingMake, ListingModel, ListingYear) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+                    $insertListing->bind_param("iiissssi", $listingID, $userID, $listingPrice, $listingDesc, $listingDate, $listingMake, $listingModel, $listingYear);
+                    $insertListing->execute();
+                ?>
             </div>
         </form>
     </div>

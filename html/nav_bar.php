@@ -41,6 +41,8 @@
                     $result = mysqli_query($conn, $findUser);
                     if (mysqli_num_rows($result) > 0) {
                         $_SESSION["username"] = $username;
+                        while($row = mysqli_fetch_assoc($result))
+                            $_SESSION["userID"] = $row["UserID"];
                         echo "<meta http-equiv='refresh' content='0'>";
                     } else if (!isset($_SESSION["username"]) && $_SERVER['REQUEST_METHOD'] == "POST") {
                         echo "<script type='text/javascript'>alert('Wrong username or password!');</script>";
@@ -56,8 +58,8 @@
             <div id="account-popup">
                 <div class="account-container">
                 <?php
-                echo "<button type='button' class='account-popup-btn settings' onclick='location.href=\"account_info.php?username=" . $_SESSION["username"] . "\"'>Account Settings</button>";
-                echo "<button type='button' class='account-popup-btn listings'>Your Listings</button>"; //user listings
+                echo "<button type='button' class='account-popup-btn settings' onclick='location.href=\"account_info.php?username=" . $_SESSION["username"] . "&userID=" . $_SESSION["userID"] . "\"'>Account Settings</button>";
+                echo "<button type='button' class='account-popup-btn listings' onclick='location.href=\"account_listings.php?userID=" . $_SESSION["userID"] . "\"'>Your Listings</button>"; //user listings
                 ?>
                 <form method="post">
                     <input name="logoutcheck" type="hidden" value="logoutcheck">
@@ -67,7 +69,7 @@
                         unset($_SESSION["username"]);
                         session_destroy();
                         //if on account_info probably just redirect to index.php
-                        if(strpos($_SERVER['REQUEST_URI'], "account_info.php")) //checks to see if account_info is in the url string
+                        if(strpos($_SERVER['REQUEST_URI'], "account_info.php") || strpos($_SERVER['REQUEST_URI'], "account_listings.php")) //checks to see if account_info is in the url string
                             header("Location: https://cargos.me/");
                         else
                             echo "<script type='text/javascript'>setTimeout(\"window.history.go(-1)\", 500);</script>";

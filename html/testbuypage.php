@@ -41,7 +41,7 @@ if (!$conn) {
                 echo "
                     <div class=\"column\"> 
                         <div class=\"columnImageDiv\">
-                            <img src=\"defaultCarImageSquare.jpg\" alt=\"Default Image\" style=\"width:400px;height:400px;\">
+                            <img src=\"/Listing_Photos/defaultCarImageSquare.jpg\" alt=\"Default Image\" style=\"width:400px;height:400px;\">
                         </div>
                         <div class=\"columnTextDiv\">
                             <a class=\"columnText\" href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </a>

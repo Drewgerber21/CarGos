@@ -54,6 +54,8 @@ session_start();
             $insertUser->execute();
 
             $_SESSION["username"] = $userName;
+            $uidQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT UserID FROM UserInfo WHERE UserName = '" . $_SESSION["username"] . "';"));
+            $_SESSION["userID"] =  $uidQuery[0];
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 echo "<script type='text/javascript'>setTimeout(\"window.history.go(-2)\", 1000);</script>";
             }

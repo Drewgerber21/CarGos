@@ -16,14 +16,14 @@ body {
     border-color: black;
     background: #1B3B6F;
     padding: 5px;
-    width: 400px;
+    width: 400px; /*changed width to 200 from 400, height from 550 to 225*/
     height: 550px;
     margin: 20px;
     margin-bottom: 0px;
 }
 
 .columnImageDiv {
-    width: 400px;
+    width: 400px; /*changed width and height from 400 to 200*/
     height: 400px;
 }
 
