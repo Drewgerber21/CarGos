@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="indexstyles.css">
     <title>Your Account</title>
+    <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
 </head>
 <body  class="pageBody">
     <body>

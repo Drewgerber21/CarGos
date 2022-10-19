@@ -16,7 +16,6 @@
         <button class="navButton" onclick="location.href='testbuypage.php'">Test Buy Page</button>
     </div>
 
-
     <div class="navButtonDiv login">
         <!-- Need to figure out how to check if someone is logged in and change button depending on that https://stackoverflow.com/questions/43714563/php-mysql-change-button-text-on-condition-->
         <?php if (!isset($_SESSION["username"])) {  ?>

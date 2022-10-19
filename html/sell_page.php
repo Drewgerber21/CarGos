@@ -11,6 +11,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sell Page</title>
     <link rel="stylesheet" href="indexstyles.css">
+    <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
 </head>
 
 <body  class="pageBody">
@@ -39,7 +40,7 @@ session_start();
                 <label for="listingYear" class="listingLabel year">Listing Year: </label>
                 <input type="number" name="listingYear" id="listingYear" min="1900" max="2023" step="1" placeholder="2022" required><br>
                 <label for="listingMake" class="listingLabel make">Listing Make: </label>
-                <select name="listingMake" id="listingMake"> <!-- why listingMade?? and not listingMake?? - Jose-->
+                <select name="listingMake" id="listingMake"> 
                     <script>
                         var selectMake = document.getElementById("listingMake");
                         fetch("https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json")
@@ -92,16 +93,11 @@ session_start();
                 <input type="text" name="listingModel" id="listingModel"><br>
                 -->
                 <label for="listingPhoto" class="listingLabel photo">Listing Photo: </label><br>
-                <input type="file" name="listingPhoto" accept="image/*"><br><br>
+                <input type="file" name="file" accept="image/*"><br><br>
                 <label for="listingDesc" class="listingLabel desc">Listing Description: </label><br>
                 <textarea name="listingDesc" id="listingDesc"></textarea><br>
                 <input type="submit" value="Create Listing">
                 <?php
-                    if(move_uploaded_file($_FILES["image"]["temp_listingPhoto"],__DIR__.'/../../Listing_Photos/' . $_FILES["image"]["listingPhoto"])){
-                        echo "<script> console.log(\"it worked\"); </script>";
-                    } else {
-                        echo "<script> console.log(\"it didn't work\"); </script>";
-                    }
                     $listingID = null;
                     $uidQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT UserID FROM UserInfo WHERE UserName = '" . $_SESSION["username"] . "';"));
                     $userID = $uidQuery[0];
@@ -115,6 +111,15 @@ session_start();
                     $insertListing = $conn->prepare("INSERT INTO ListingInfo(ListingID, UserID, ListingPrice, ListingDesc, ListingDate, ListingMake, ListingModel, ListingYear) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
                     $insertListing->bind_param("iiissssi", $listingID, $userID, $listingPrice, $listingDesc, $listingDate, $listingMake, $listingModel, $listingYear);
                     $insertListing->execute();
+
+                    if($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $listingQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(ListingID) FROM ListingInfo WHERE UserID = " . $userID . ";"));
+                        $listingIDtest = $listingQuery[0];
+                        $fileName = $listingIDtest;
+                        if(!move_uploaded_file($_FILES["file"]["tmp_name"], __DIR__ . "/Listing_Photos/" . $fileName . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION))) {
+                            echo $_FILES["file"]["error"];//"<script> console.log(\"it didn't work\"); </script>";
+                        } 
+                    }
                 ?>
             </div>
         </form>

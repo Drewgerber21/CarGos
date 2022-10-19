@@ -1,7 +1,51 @@
+/* General page format. */
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.pageBody {
+    margin:0;
+}
+/* Page Header. */
+.pageHeader {
+    background-color: #21295C;
+    padding: 10px;
+}
+
+/* Page Navbar */
+.pageNav {
+    display: flex;
+    background-color: #1B3B6F;
+    padding: 5px;
+}
+
+.pageNav .login {
+    margin-left: auto;
+    margin-right: 150px;
+}
+
+.navButtonDiv {
+    align-items: auto;
+    vertical-align: top;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navButton {
+    font-size: larger;
+    color: white;
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.navButton:hover {
+    color: rgb(219, 219, 219);
+}
+
+/* Buy page listing elements. */
 .column-wrapper {
     height: inherit;
     display: flex;
@@ -39,53 +83,62 @@ body {
     font-size: 30px;
 }
 
-.pageBody {
-    margin:0;
+.column:hover {
+    opacity: 0.7;
 }
 
-.pageHeader {
-    background-color: #21295C;
+/* Login popup. */
+#login-popup {
+    height: auto;
+    display: none;
+    position: fixed;
+    border: 3px solid gray;
+    z-index: 3;
+}
+
+#login-popup .container {
+    max-width: 200px;
+    padding: 15px;
+    background-color: white;
+}
+
+#login-popup .container input[type=text], #login-popup .container input[type=password] {
+    width: 100%;
     padding: 10px;
+    margin: 10px 10px 30px -10px;
+    border: none;
+    background: rgb(226, 226, 226);
 }
 
-.pageNav {
-    display: flex;
-    background-color: #1B3B6F;
-    padding: 5px;
+.login-popup-btn {
+    background-color: black;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
 }
+
+#login-popup .container label, #login-popup .container h1 {
+    margin-left: -10px;
+}
+
+#login-popup .container input[type=text]:focus , #login-popup .container input[type=password]:focus {
+    background-color: rgb(185, 185, 185);
+    outline: none;
+}
+
+#login-popup .container .login-popup-btn:hover, .login-button:hover {
+    opacity: 1;
+}
+
+
 
 .listingTable {
     line-height: 30px;
 }
-
-.pageNav .login {
-    margin-left: auto;
-    margin-right: 150px;
-}
-
-.navButtonDiv {
-    align-items: auto;
-    vertical-align: top;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-
-
-.navButton {
-    font-size: larger;
-    color: white;
-    border: none;
-    background-color: inherit;
-    padding: 14px 28px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.navButton:hover {
-    color: rgb(219, 219, 219);
-}
-
 
 .title {
     color: white;
@@ -137,58 +190,12 @@ body {
     flex-direction: column;
 }
 
-#login-popup {
-    height: auto;
-    display: none;
-    position: fixed;
-    border: 3px solid gray;
-    z-index: 3;
-}
-
-#login-popup .container {
-    max-width: 200px;
-    padding: 15px;
-    background-color: white;
-}
-
-#login-popup .container input[type=text], #login-popup .container input[type=password] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 10px 30px -10px;
-    border: none;
-    background: rgb(226, 226, 226);
-}
-
-.login-popup-btn {
-    background-color: black;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
-    opacity: 0.8;
-}
-
 .createAccLink {
     position: relative;
     text-align: center;
     margin: 10px 12px;
     padding: 16px 20px;
     width: 50%;
-}
-
-#login-popup .container label, #login-popup .container h1 {
-    margin-left: -10px;
-}
-
-#login-popup .container input[type=text]:focus , #login-popup .container input[type=password]:focus {
-    background-color: rgb(185, 185, 185);
-    outline: none;
-}
-
-#login-popup .container .login-popup-btn:hover, .login-button:hover {
-    opacity: 1;
 }
 
 #account-popup {
