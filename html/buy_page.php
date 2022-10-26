@@ -31,41 +31,48 @@ if (!$conn) {
     <body>
         <?php include("nav_bar.php"); ?>
     </body>
+    
+    <div class="gridContainer">
+        <div class="sideBar">
+            <p>Filters</p>
+        </div>
+        <div class="mainContentDiv">
+            <!-- Displays listings in a grid -->
+            <div class="column-wrapper">
+                <?php
+                    $selectListing = "SELECT * FROM ListingInfo ORDER BY ListingID DESC";
+                    $result = mysqli_query($conn, $selectListing);
+                    $extensions = array("png", "jpg", "jpeg", "webp");
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
+                        echo "
+                            <a href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">
+                                <div class=\"column\" > 
+                                    <div class=\"columnImageDiv\">
+                                        <img src=\"/" . $imgUrl . "\" alt=\"Car Listing Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"object-fit:contain; width:400px; height:400px;\">
 
-    <!-- Mockup for grabbing listing data from db -->
-    <div class="buyTempDiv">
-        <?php
-        $selectListing = "SELECT * FROM ListingInfo";
-        $result = mysqli_query($conn, $selectListing);
-        if (mysqli_num_rows($result) > 0) {
-            echo "<table class=\"listingTable\">
-                <tr>
-                    <th>Listing Price</th>
-                    <th>Listing Year</th>
-                    <th>Listing Make</th>
-                    <th>Listing Model</th>
-                    <th>Listing Description</th>
-                    <th>Listing Date</th>
-                </tr>";
-        }
+                                    </div>
+                                    <div class=\"columnTextDiv\">
+                                        <a class=\"columnText\" href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </a>
+                                        <p class=\"columnText\">$"  . $row["ListingPrice"] . " </p>
+                                    </div>
+                                </div>
+                            </a>";
+                    }
+                ?>      
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr>
-                    <td>" . $row["ListingPrice"] . "</a></td>" .
-                "<td>" . $row["ListingYear"] . "</td>" .
-                "<td><a href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">" . $row["ListingMake"] . "</a></td>" .
-                "<td>" . $row["ListingModel"] . "</td" .
-                "<td>" . $row["ListingDesc"] . "</td>" .
-                "<td>" . $row["ListingDate"] . "</td>"
-                . "</tr>";
-        }
-        echo "</table>";
-        ?>
+                <?php
+                    $conn->close();
+                ?>
+            </div>
+        </div>
     </div>
+
+    <div class="homeMainPageFooter">
+      <p class="homeMainPageFooterText">People who worked on this project:</p>
+      <p class="homeMainPageFooterText">Eddie</p>
+      <p class="homeMainPageFooterText">Jose</p>
+      <p class="homeMainPageFooterText">Drew</p>
     </div>
-    <?php
-    $conn->close();
-    ?>
 </body>
-
 </html>

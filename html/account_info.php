@@ -29,5 +29,6 @@
         echo "Please log in to view this page!";
     }
     ?>
+    <?php include("footer.php"); ?>
 </body>
 </html>

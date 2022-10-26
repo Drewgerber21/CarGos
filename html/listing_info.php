@@ -35,13 +35,21 @@ session_start();
             $editingMode = $_GET["editingMode"];
             $selectListing = "SELECT * FROM ListingInfo WHERE ListingID = " . $listingID . ";";
             $result = mysqli_query($conn, $selectListing);
+
+            $extensions = array("png", "jpg", "jpeg", "webp");
             while ($row = mysqli_fetch_assoc($result)) {
+                $imgUrl = "Listing_Photos/" . $row["ListingID"];
+                foreach($extensions as $ext) {
+                    if(file_exists($imgUrl . "." . $ext)) {
+                        $imgUrl = $imgUrl . "." . $ext;
+                    }
+                }
                 if(!$_GET["editingMode"]) {
                 echo "
                     <div>
                         <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </h1>
                         <h2>Price: $"  . $row["ListingPrice"] . " </h2>
-                        <img src=\"/Listing_Photos/" . $row["ListingID"] . ".jpg\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:400px;height:400px;\">
+                        <img src=\"/" . $imgUrl . "\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:400px;height:400px;\">
                         <p> " . $row["ListingDesc"] . " </p>
                         <p>Posted " . $row["ListingDate"] . " </p>
                     </div>
@@ -55,7 +63,7 @@ session_start();
                         <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " . $row["ListingModel"] . " </h1>
                         <label for='listingPrice' class='listingLabel price'>Listing Price: $</label>
                         <input type='number' name='listingPrice' id='listingPrice' min='1' max='99999999' step='1' value='" . $row["ListingPrice"] . "' required><br>
-                        <img src=\"/Listing_Photos/" . $row["ListingID"] . ".jpg\" alt=\"Default Image\" style=\"width:400px;height:400px;\"><br>
+                        <img src=\"/" . $imgUrl . "\" alt=\"Default Image\" style=\"width:400px;height:400px;\"><br>
                         <textarea name='listingDesc' id='listingDesc'>" . $row["ListingDesc"] . "</textarea>
                     </div>";
                     ?>

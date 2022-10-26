@@ -6,6 +6,11 @@ body {
 .pageBody {
     margin:0;
 }
+
+.mainContentDiv {
+    min-height: 750px;
+}
+
 /* Page Header. */
 .pageHeader {
     background-color: #21295C;
@@ -15,6 +20,7 @@ body {
 /* Page Navbar */
 .pageNav {
     display: flex;
+    flex-wrap: wrap;
     background-color: #1B3B6F;
     padding: 5px;
 }
@@ -67,6 +73,7 @@ body {
 }
 
 .columnImageDiv {
+    background: black;
     width: 400px; /*changed width and height from 400 to 200*/
     height: 400px;
 }
@@ -87,11 +94,25 @@ body {
     opacity: 0.7;
 }
 
+/* Buy page sidebar. */
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-gap: 20px;
+}
+
+.sideBar {
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+}
+
 /* Login popup. */
 #login-popup {
     height: auto;
     display: none;
-    position: fixed;
+    position: absolute;
     border: 3px solid gray;
     z-index: 3;
 }
@@ -142,11 +163,6 @@ body {
 
 .title {
     color: white;
-}
-
-.homeMainPage {
-    min-height: 750px;
-    padding: 5px;
 }
 
 .homeMainPageTitle {
@@ -201,7 +217,7 @@ body {
 #account-popup {
     height: auto;
     display: none;
-    position: fixed;
+    position: absolute;
     border: 3px solid gray;
     z-index: 3;
 }

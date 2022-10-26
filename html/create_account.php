@@ -14,9 +14,7 @@ session_start();
     <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
 </head>
 
-<body  class="pageBody">
-    <input name="back" onclick="history.back()" type="submit" value="Go back">
-
+<body class="pageBody">
     <?php
     $servername = "localhost";
     $user = "root";
@@ -28,6 +26,8 @@ session_start();
     if (!$conn) {
         die("Connection failed " . mysqli_connect_error());
     }
+
+    include("nav_bar.php");
     ?>
 
     <h1>Create a <i>CarGos</i> account</h1>

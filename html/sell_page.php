@@ -116,7 +116,7 @@ session_start();
                         $listingQuery = mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(ListingID) FROM ListingInfo WHERE UserID = " . $userID . ";"));
                         $listingIDtest = $listingQuery[0];
                         $fileName = $listingIDtest;
-                        if(!move_uploaded_file($_FILES["file"]["tmp_name"], __DIR__ . "/Listing_Photos/" . $fileName . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION))) {
+                        if(!imagepng(imagecreatefromstring(file_get_contents($_FILES["file"]["tmp_name"])),__DIR__ . "/Listing_Photos/" . $fileName . ".png")) {
                             echo $_FILES["file"]["error"];//"<script> console.log(\"it didn't work\"); </script>";
                         } 
                     }
@@ -134,6 +134,7 @@ session_start();
     <?php
     $conn->close();
     ?>
+    <?php include("footer.php"); ?>
 </body>
 
 </html>

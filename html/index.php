@@ -30,7 +30,7 @@ if (!$conn) {
   <body class="pageBody">
     <?php include("nav_bar.php"); ?>
 
-    <div class="homeMainPage">
+    <div class="mainContentDiv">
       <div class="homMainPageTitle">
         <h1>This is a title for stuff about our project</h1>
       </div>
@@ -39,11 +39,7 @@ if (!$conn) {
       </div>
     </div>
 
-    <div class="homeMainPageFooter">
-      <p class="homeMainPageFooterText">People who worked on this project:</p>
-      <p class="homeMainPageFooterText">Eddie</p>
-      <p class="homeMainPageFooterText">Jose</p>
-      <p class="homeMainPageFooterText">Drew</p>
+    <?php include("footer.php"); ?>
     </div>
   </body>
 </html>

@@ -10,7 +10,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="indexstyles.css">
-    <title>Test Buy Page</title>
+    <title>Buy Page</title>
     <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
 </head>
 
@@ -37,19 +37,13 @@ if (!$conn) {
         <?php
             $selectListing = "SELECT * FROM ListingInfo ORDER BY ListingID DESC";
             $result = mysqli_query($conn, $selectListing);
-            $extensions = array("png", "jpg", "jpeg");
             while ($row = mysqli_fetch_assoc($result)) {
-                $imgUrl = "Listing_Photos/" . $row["ListingID"];
-                foreach($extensions as $ext) {
-                    if(file_exists($imgUrl . "." . $ext)) {
-                        $imgUrl = $imgUrl . "." . $ext;
-                    }
-                }
+                $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
                 echo "
                     <a href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">
                         <div class=\"column\" > 
                             <div class=\"columnImageDiv\">
-                                <img src=\"/" . $imgUrl . "\" alt=\"Car Listing Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:400px;height:400px;\">
+                                <img src=\"/" . $imgUrl . "\" alt=\"Car Listing Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"object-fit:contain; width:400px; height:400px;\">
 
                             </div>
                             <div class=\"columnTextDiv\">
