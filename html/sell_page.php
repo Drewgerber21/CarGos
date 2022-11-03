@@ -31,7 +31,7 @@ session_start();
         <?php include("nav_bar.php"); ?>
     </body>
 
-    <div class="sellMainDiv">
+    <div class="mainContentDiv">
         <form method="post" action="sell_page.php" class="sellPageForm" enctype="multipart/form-data">
             <!-- Creating a create listing mockup-->
             <div class="sellInputs" id="sellInputs">

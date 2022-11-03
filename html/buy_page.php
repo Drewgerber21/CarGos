@@ -11,7 +11,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="indexstyles.css">
     <title>Buy Page</title>
-    <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
 </head>
 
 <?php
@@ -34,7 +34,16 @@ if (!$conn) {
     
     <div class="gridContainer">
         <div class="sideBar">
-            <p>Filters</p>
+            <?php
+                echo "
+                <p>Filters</p>
+                <form method='get' action=''>
+                    <p>Price Range:</p>
+                    <p>Min: <input type='number' name='minPrice' id='minPrice' min='0' max='99999999' step='1'> </p>
+                    <p>Max: <input type='number' name='maxPrice' id='maxPrice' min='0' max='99999999' step='1'> </p>
+                    <button type='submit'>Apply</button>
+                </form> ";
+            ?>
         </div>
         <div class="mainContentDiv">
             <!-- Displays listings in a grid -->
@@ -42,7 +51,6 @@ if (!$conn) {
                 <?php
                     $selectListing = "SELECT * FROM ListingInfo ORDER BY ListingID DESC";
                     $result = mysqli_query($conn, $selectListing);
-                    $extensions = array("png", "jpg", "jpeg", "webp");
                     while ($row = mysqli_fetch_assoc($result)) {
                         $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
                         echo "
@@ -68,11 +76,6 @@ if (!$conn) {
         </div>
     </div>
 
-    <div class="homeMainPageFooter">
-      <p class="homeMainPageFooterText">People who worked on this project:</p>
-      <p class="homeMainPageFooterText">Eddie</p>
-      <p class="homeMainPageFooterText">Jose</p>
-      <p class="homeMainPageFooterText">Drew</p>
-    </div>
+    <?php include("footer.php"); ?>
 </body>
 </html>

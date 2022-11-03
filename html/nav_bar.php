@@ -1,5 +1,5 @@
 <div class="pageHeader">
-    <img src="CarGos Logo.png" width="200" />
+    <img src="/Website Logos/CarGos Logo.png" width="200" />
 </div>
 
 <div class="pageNav">

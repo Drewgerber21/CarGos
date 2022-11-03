@@ -5,6 +5,7 @@ body {
 
 .pageBody {
     margin:0;
+    min-height: 100%;
 }
 
 .mainContentDiv {
@@ -16,6 +17,7 @@ body {
     background-color: #21295C;
     padding: 10px;
 }
+
 
 /* Page Navbar */
 .pageNav {

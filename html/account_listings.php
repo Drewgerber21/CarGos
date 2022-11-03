@@ -1,33 +1,35 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Listings</title>
-    <link rel="stylesheet" href="indexstyles.css">
-    <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
-</head>
-<?php
-    $servername = "localhost";
-    $user = "root";
-    $password = "piWJbQv5Ksd8Yk";
-    $dbname = "CarGos";
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your Listings</title>
+        <link rel="stylesheet" href="indexstyles.css">
+        <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
+    </head>
 
-    $conn = mysqli_connect($servername, $user, $password, $dbname);
+    <?php
+        $servername = "localhost";
+        $user = "root";
+        $password = "piWJbQv5Ksd8Yk";
+        $dbname = "CarGos";
 
-    if (!$conn) {
-        die("Connection failed " . mysqli_connect_error());
-    }
-?>
-<body class="pageBody">
-    <?php include("nav_bar.php"); ?>
-</body>
-<div class="column-wrapper">
+        $conn = mysqli_connect($servername, $user, $password, $dbname);
+
+        if (!$conn) {
+            die("Connection failed " . mysqli_connect_error());
+        }
+    ?>
+
+    <body class="pageBody">
+        <?php include("nav_bar.php"); ?>
+    </body>
+
+    <div class="column-wrapper">
         <?php
             $userID = $_GET["userID"];
             $selectListing = "SELECT * FROM ListingInfo WHERE UserID = " . $userID . " ORDER BY ListingID DESC;";
@@ -49,9 +51,7 @@ session_start();
             }
             echo "</table>";
         ?>
-        <?php
-            $conn->close();
-        ?>
+        <?php $conn->close(); ?>
         <script>
             function deleteListing(divID) {
                 var id = divID.id;
@@ -66,6 +66,7 @@ session_start();
                 .then(window.location.reload())
                 .catch(err => console.log(err))
             }
-        </script>
+        </script>   
     </div>
+    <?php include("footer.php"); ?>
 </html>

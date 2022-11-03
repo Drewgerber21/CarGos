@@ -12,7 +12,7 @@ session_start();
     <?php 
         echo "<title>" . $_GET["listingMake"] . " " . $_GET["listingModel"] . " for sale!</title>";
     ?>
-     <link rel="icon" type="image/x-icon" href="/Favicon/favicon.ico">
+     <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
 </head>
 <?php
     $servername = "localhost";
@@ -28,7 +28,6 @@ session_start();
 ?>
 <body class="pageBody" style="box-sizing: border-box">
     <?php include("nav_bar.php"); ?>
-
     <div>
         <?php
             $listingID = $_GET["listingID"];
@@ -36,22 +35,29 @@ session_start();
             $selectListing = "SELECT * FROM ListingInfo WHERE ListingID = " . $listingID . ";";
             $result = mysqli_query($conn, $selectListing);
 
-            $extensions = array("png", "jpg", "jpeg", "webp");
             while ($row = mysqli_fetch_assoc($result)) {
-                $imgUrl = "Listing_Photos/" . $row["ListingID"];
-                foreach($extensions as $ext) {
-                    if(file_exists($imgUrl . "." . $ext)) {
-                        $imgUrl = $imgUrl . "." . $ext;
+                ?>
+                <script>
+                    window.onload = function() {
+                        getMessages(<?php echo $row["UserID"] ?>, <?php echo $_SESSION["userID"] ?>, <?php echo $row["ListingID"] ?>);
                     }
-                }
+                </script>
+                <?php
+                $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
                 if(!$_GET["editingMode"]) {
                 echo "
                     <div>
                         <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </h1>
                         <h2>Price: $"  . $row["ListingPrice"] . " </h2>
                         <img src=\"/" . $imgUrl . "\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:400px;height:400px;\">
-                        <p> " . $row["ListingDesc"] . " </p>
-                        <p>Posted " . $row["ListingDate"] . " </p>
+                        <p> " . $row["ListingDesc"] . " </p>";
+                        if($row["UserID"] != $_SESSION["userID"]) {
+                        ?>
+                            <input type="text" name="messageContent" id="messageContent">
+                        <?php
+                            echo "<button id='messageBtn' onclick='sendMessage(" . $row["ListingID"] . ", " . $row["UserID"] . ", " . $_SESSION["userID"] . ", \"" . date("Y-m-d h:i:s"). "\")'>Send Message</button>";
+                        }
+                        echo "<p>Posted " . $row["ListingDate"] . " </p>
                     </div>
                 ";
                 } else {
@@ -89,11 +95,43 @@ session_start();
     <?php
         $conn->close();
     ?>
-    <div class="homeMainPageFooter">
-      <p class="homeMainPageFooterText">People who worked on this project:</p>
-      <p class="homeMainPageFooterText">Eddie</p>
-      <p class="homeMainPageFooterText">Jose</p>
-      <p class="homeMainPageFooterText">Drew</p>
-    </div>
+    <?php include("footer.php"); ?>
 </body>
+<script>
+    function goToChats() {
+        window.location.href = "inbox.php";
+    }
+
+    function sendMessage(chatID, userTo, userFrom, sendDate) {
+        var messageContent = document.getElementById("messageContent").value;
+        fetch("send_message.php", {
+            method: "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: "chatID=" + chatID + "&userTo=" + userTo + "&userFrom=" + userFrom + "&dateSent=" + sendDate + "&messageContent=" + messageContent,
+        })
+        .then(() => {
+            document.getElementById("messageContent").style.display = "none";
+            document.getElementById("messageBtn").innerHTML = "Check Message";
+            document.getElementById("messageBtn").onclick = goToChats;
+        })
+        .catch(err => console.log(err));
+    }
+
+    function getMessages(userTo, userFrom, chatID) {
+        fetch("receive_message.php?userTo=" + userTo + "&userFrom="  + userFrom + "&chatID=" + chatID)
+        .then(response => response.json())
+        .then(data => {
+            if(data.length > 0) {
+                document.getElementById("messageContent").style.display = "none";
+                document.getElementById("messageBtn").innerHTML = "Check Message";
+                document.getElementById("messageBtn").onclick = goToChats;
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
+</script>
 </html>
