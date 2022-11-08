@@ -55,7 +55,7 @@ session_start();
                         ?>
                             <input type="text" name="messageContent" id="messageContent">
                         <?php
-                            echo "<button id='messageBtn' onclick='sendMessage(" . $row["ListingID"] . ", " . $row["UserID"] . ", " . $_SESSION["userID"] . ", \"" . date("Y-m-d h:i:s"). "\")'>Send Message</button>";
+                            echo "<button id='messageBtn' onclick='sendMessage(" . $row["ListingID"] . ", " . $row["UserID"] . ", " . $_SESSION["userID"] . ", \"" . date("Y-m-d h:i:s") . "\")'>Send Message</button>";
                         }
                         echo "<p>Posted " . $row["ListingDate"] . " </p>
                     </div>

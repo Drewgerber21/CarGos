@@ -12,6 +12,7 @@ if(isset($_POST["chatID"]) && isset($_POST["userTo"])) {
         die("Connection failed " . mysqli_connect_error());
     }
     
+    
     $chatID = $_POST["chatID"];
     $userTo = $_POST["userTo"];
     $userFrom = $_POST["userFrom"];
