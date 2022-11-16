@@ -61,7 +61,7 @@ if (!$conn) {
 
                                     </div>
                                     <div class=\"columnTextDiv\">
-                                        <a class=\"columnText\" href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </a>
+                                        <a class=\"columnText\" href=\"../Account & Listing Info/listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </a>
                                         <p class=\"columnText\">$"  . $row["ListingPrice"] . " </p>
                                     </div>
                                 </div>

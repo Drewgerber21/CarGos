@@ -4,17 +4,17 @@
 
 <div class="pageNav">
     <div class="navButtonDiv">
-        <button class="navButton" onclick="location.href='index.php'">Home</button>
+        <button class="navButton" onclick="location.href='../index.php'">Home</button>
     </div>
     <div class="navButtonDiv">
-        <button class="navButton" onclick="location.href='buy_page.php'">Buy</button>
+        <button class="navButton" onclick="location.href='../buy_page.php'">Buy</button>
     </div>
     <div class="navButtonDiv">
-        <button class="navButton" onclick="location.href='sell_page.php'">Sell</button>
+        <button class="navButton" onclick="location.href='../sell_page.php'">Sell</button>
     </div>
 
     <div class="navButtonDiv inbox">
-        <button class="navButton" onclick="location.href='inbox.php'">Inbox</button>
+        <button class="navButton" onclick="location.href='../Inbox/inbox.php'">Inbox</button>
     </div>
     <div class="navButtonDiv login">
         <!-- Need to figure out how to check if someone is logged in and change button depending on that https://stackoverflow.com/questions/43714563/php-mysql-change-button-text-on-condition-->
@@ -48,7 +48,7 @@
                     }
                     ?>
                     <button type="button" class="login-popup-btn cancel" onclick="loginPopdown()">X</button>
-                    <a class="createAccLink" href="create_account.php">Create an account!</a>
+                    <a class="createAccLink" href="Account & Listing Info/create_account.php">Create an account!</a>
                 </form>
             </div>
         <?php } else { //else show account info
@@ -57,8 +57,8 @@
             <div id="account-popup">
                 <div class="account-container">
                 <?php
-                echo "<button type='button' class='account-popup-btn settings' onclick='location.href=\"account_info.php?username=" . $_SESSION["username"] . "&userID=" . $_SESSION["userID"] . "\"'>Account Settings</button>";
-                echo "<button type='button' class='account-popup-btn listings' onclick='location.href=\"account_listings.php?userID=" . $_SESSION["userID"] . "\"'>Your Listings</button>"; //user listings
+                echo "<button type='button' class='account-popup-btn settings' onclick='location.href=\"../Account & Listing Info/account_info.php?username=" . $_SESSION["username"] . "&userID=" . $_SESSION["userID"] . "\"'>Account Settings</button>";
+                echo "<button type='button' class='account-popup-btn listings' onclick='location.href=\"../Account & Listing Info/account_listings.php?userID=" . $_SESSION["userID"] . "\"'>Your Listings</button>"; //user listings
                 ?>
                 <form method="post">
                     <input name="logoutcheck" type="hidden" value="logoutcheck">

@@ -8,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="indexstyles.css">
+    <link rel="stylesheet" href="../indexstyles.css">
     <?php 
         echo "<title>" . $_GET["listingMake"] . " " . $_GET["listingModel"] . " for sale!</title>";
     ?>
@@ -27,7 +27,7 @@ session_start();
     }
 ?>
 <body class="pageBody" style="box-sizing: border-box">
-    <?php include("nav_bar.php"); ?>
+    <?php include("../nav_bar.php"); ?>
     <div>
         <?php
             $listingID = $_GET["listingID"];
@@ -69,7 +69,7 @@ session_start();
                         <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " . $row["ListingModel"] . " </h1>
                         <label for='listingPrice' class='listingLabel price'>Listing Price: $</label>
                         <input type='number' name='listingPrice' id='listingPrice' min='1' max='99999999' step='1' value='" . $row["ListingPrice"] . "' required><br>
-                        <img src=\"/" . $imgUrl . "\" alt=\"Default Image\" style=\"width:400px;height:400px;\"><br>
+                        <img src=\"Listing_Photos/defaultCarImageSquare.jpg\" . $imgUrl . alt=\"Default Image\" style=\"width:400px;height:400px;\"><br>
                         <textarea name='listingDesc' id='listingDesc'>" . $row["ListingDesc"] . "</textarea>
                     </div>";
                     ?>
@@ -95,16 +95,16 @@ session_start();
     <?php
         $conn->close();
     ?>
-    <?php include("footer.php"); ?>
+    <?php include("../footer.php"); ?>
 </body>
 <script>
     function goToChats() {
-        window.location.href = "inbox.php";
+        window.location.href = "../Inbox/inbox.php";
     }
 
     function sendMessage(chatID, userTo, userFrom, sendDate) {
         var messageContent = document.getElementById("messageContent").value;
-        fetch("send_message.php", {
+        fetch("../Inbox/send_message.php", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -121,7 +121,7 @@ session_start();
     }
 
     function getMessages(userTo, userFrom, chatID) {
-        fetch("receive_message.php?userTo=" + userTo + "&userFrom="  + userFrom + "&chatID=" + chatID)
+        fetch("../Inbox/receive_message.php?userTo=" + userTo + "&userFrom="  + userFrom + "&chatID=" + chatID)
         .then(response => response.json())
         .then(data => {
             if(data.length > 0) {

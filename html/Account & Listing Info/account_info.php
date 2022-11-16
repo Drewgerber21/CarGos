@@ -8,13 +8,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="indexstyles.css">
+    <link rel="stylesheet" href="../indexstyles.css">
     <title>Your Account</title>
     <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
 </head>
 <body  class="pageBody">
     <body>
-        <?php include("nav_bar.php"); ?>
+        <?php include("../nav_bar.php"); ?>
     </body>
 
     <?php
@@ -29,6 +29,6 @@
         echo "Please log in to view this page!";
     }
     ?>
-    <?php include("footer.php"); ?>
+    <?php include("../footer.php"); ?>
 </body>
 </html>
