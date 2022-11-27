@@ -9,10 +9,9 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../indexstyles.css">
-    <?php 
-        echo "<title>" . $_GET["listingMake"] . " " . $_GET["listingModel"] . " for sale!</title>";
-    ?>
-     <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
+    <?php echo "<title>" . $_GET["listingMake"] . " " . $_GET["listingModel"] . " for sale!</title>"; ?>
+    <link rel="icon" type="image/x-icon" href="/Website Logos/favicon.ico">
+     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <?php
     $servername = "localhost";
@@ -26,7 +25,7 @@ session_start();
         die("Connection failed " . mysqli_connect_error());
     }
 ?>
-<body class="pageBody" style="box-sizing: border-box">
+<body id="pageBody" style="box-sizing: border-box">
     <?php include("../nav_bar.php"); ?>
     <div>
         <?php
@@ -46,18 +45,22 @@ session_start();
                 $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
                 if(!$_GET["editingMode"]) {
                 echo "
-                    <div>
-                        <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </h1>
-                        <h2>Price: $"  . $row["ListingPrice"] . " </h2>
-                        <img src=\"/" . $imgUrl . "\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:400px;height:400px;\">
-                        <p> " . $row["ListingDesc"] . " </p>";
-                        if($row["UserID"] != $_SESSION["userID"]) {
-                        ?>
-                            <input type="text" name="messageContent" id="messageContent">
-                        <?php
-                            echo "<button id='messageBtn' onclick='sendMessage(" . $row["ListingID"] . ", " . $row["UserID"] . ", " . $_SESSION["userID"] . ", \"" . date("Y-m-d h:i:s") . "\")'>Send Message</button>";
-                        }
-                        echo "<p>Posted " . $row["ListingDate"] . " </p>
+                    <div id=\"container\" class=\"flex flex-row flex-wrap\">
+                        <div id=\"img\" class=\"mr-10 ml-auto\">
+                            <img class=\"rounded-md my-10\" src=\"/" . $imgUrl . "\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:600px;height:500px;\">
+                        </div>
+                        <div id=\"listinginfo\" class=\"mr-auto ml-10 m-5\">
+                            <h1 class=\"text-xl font-bold\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " .  $row["ListingModel"] . " </h1>
+                            <h2>$"  . $row["ListingPrice"] . " </h2>
+                            <p class=\"overflow-hidden overflow-y-auto max-w-sm max-h-96 my-2\"> " . $row["ListingDesc"] . " </p>";
+                            if($row["UserID"] != $_SESSION["userID"]) {
+                            ?>
+                                <input type="text" name="messageContent" id="messageContent" class="py-1 px-1.5 shadow-sm border-black border-2 rounded-sm focus:ring focus:ring-black">
+                            <?php
+                                echo "<button class=\"py-2 px-3 bg-black rounded-md text-white text-sm shadow hover:opacity-75\" id='messageBtn' onclick='sendMessage(" . $row["ListingID"] . ", " . $row["UserID"] . ", " . $_SESSION["userID"] . ", \"" . date("Y-m-d h:i:s") . "\")'>Send Message</button>";
+                            }
+                            echo "<p>Posted " . $row["ListingDate"] . " </p>
+                        </div>
                     </div>
                 ";
                 } else {

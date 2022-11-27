@@ -48,7 +48,7 @@
                     }
                     ?>
                     <button type="button" class="login-popup-btn cancel" onclick="loginPopdown()">X</button>
-                    <a class="createAccLink" href="Account & Listing Info/create_account.php">Create an account!</a>
+                    <a class="createAccLink" href="../Account & Listing Info/create_account.php">Create an account!</a>
                 </form>
             </div>
         <?php } else { //else show account info

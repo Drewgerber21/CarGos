@@ -84,9 +84,6 @@ session_start();
                             .catch(err => { console.log(err) });
                         }
                     </script>
-                <!-- ADD MORE MAKES AND MODELS
-                     ADD A WAY TO CHECK IF THE MODEL'S OPTGROUP LABEL MATCHES THE listingMake
-                -->
                 </select>
                 <br><br>
                 <!--

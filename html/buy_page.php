@@ -34,16 +34,13 @@ if (!$conn) {
     
     <div class="gridContainer">
         <div class="sideBar">
-            <?php
-                echo "
-                <p>Filters</p>
-                <form method='get' action=''>
-                    <p>Price Range:</p>
-                    <p>Min: <input type='number' name='minPrice' id='minPrice' min='0' max='99999999' step='1'> </p>
-                    <p>Max: <input type='number' name='maxPrice' id='maxPrice' min='0' max='99999999' step='1'> </p>
-                    <button type='submit'>Apply</button>
-                </form> ";
-            ?>
+            <p>Filters</p>
+            <form method='get' action=''>
+                <p>Price Range:</p>
+                <p>Min: <input type='number' name='minPrice' id='minPrice' min='0' max='99999999' step='1'> </p>
+                <p>Max: <input type='number' name='maxPrice' id='maxPrice' min='0' max='99999999' step='1'> </p>
+                <button type='submit'>Apply</button>
+            </form>
         </div>
         <div class="mainContentDiv">
             <!-- Displays listings in a grid -->
@@ -54,7 +51,7 @@ if (!$conn) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
                         echo "
-                            <a href=\"listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">
+                            <a href=\"Account & Listing Info/listing_info.php?listingID=" . $row["ListingID"] . "&listingMake=" . $row["ListingMake"] . "&listingModel=" . $row["ListingModel"] . "\">
                                 <div class=\"column\" > 
                                     <div class=\"columnImageDiv\">
                                         <img src=\"/" . $imgUrl . "\" alt=\"Car Listing Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"object-fit:contain; width:400px; height:400px;\">
