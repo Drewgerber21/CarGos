@@ -55,7 +55,7 @@
         <script>
             function deleteListing(divID) {
                 var id = divID.id;
-                fetch("Account & Listing Info/delete_account_listing.php", {
+                fetch("delete_account_listing.php", {
                     method: "post",
                     headers: {
                         'Accept': 'application/json',

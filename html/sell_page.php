@@ -114,7 +114,8 @@ session_start();
                         $listingIDtest = $listingQuery[0];
                         $fileName = $listingIDtest;
                         if(!imagepng(imagecreatefromstring(file_get_contents($_FILES["file"]["tmp_name"])),__DIR__ . "/Listing_Photos/" . $fileName . ".png")) {
-                            echo $_FILES["file"]["error"];//"<script> console.log(\"it didn't work\"); </script>";
+                            echo "Issue uploading photo";
+                            echo "<script> console.log(\"" . $_FILES["file"]["error"] . "\"); </script>";
                         } 
                     }
                 ?>

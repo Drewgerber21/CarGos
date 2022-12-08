@@ -35,10 +35,10 @@ if (!$conn) {
     <div class="gridContainer">
         <div class="sideBar">
             <p>Filters</p>
-            <form method='get' action=''>
+            <form method='GET'>
                 <p>Price Range:</p>
-                <p>Min: <input type='number' name='minPrice' id='minPrice' min='0' max='99999999' step='1'> </p>
-                <p>Max: <input type='number' name='maxPrice' id='maxPrice' min='0' max='99999999' step='1'> </p>
+                <p>Min: <input type='number' name='minPrice' id='minPrice' min='1' max='99999999' step='1'> </p>
+                <p>Max: <input type='number' name='maxPrice' id='maxPrice' min='1' max='99999999' step='1'> </p>
                 <button type='submit'>Apply</button>
             </form>
         </div>
@@ -46,7 +46,17 @@ if (!$conn) {
             <!-- Displays listings in a grid -->
             <div class="column-wrapper">
                 <?php
-                    $selectListing = "SELECT * FROM ListingInfo ORDER BY ListingID DESC";
+                    $min = $_GET["minPrice"];
+                    $max = $_GET["maxPrice"];
+                    if($min || $max) { //Checks if min or max exist
+                        if(!$min && $max) //if min doesn't but max does, set min = 1
+                            $min = 1;
+                        else if ($min && !$max) // else if min exists and max doesn't, set max = big number
+                            $max = 99999999;
+                        $selectListing = "SELECT * FROM ListingInfo WHERE ListingPrice BETWEEN " . $min . " AND " . $max . " ORDER BY ListingID DESC";
+                    } else {
+                        $selectListing = "SELECT * FROM ListingInfo ORDER BY ListingID DESC";
+                    }
                     $result = mysqli_query($conn, $selectListing);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $imgUrl = "Listing_Photos/" . $row["ListingID"] . ".png";
@@ -72,7 +82,6 @@ if (!$conn) {
             </div>
         </div>
     </div>
-
     <?php include("footer.php"); ?>
 </body>
 </html>

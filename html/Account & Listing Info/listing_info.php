@@ -68,29 +68,31 @@ session_start();
                     <form method="post">
                     <?php
                     echo "
-                    <div>
-                        <h1> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " . $row["ListingModel"] . " </h1>
-                        <label for='listingPrice' class='listingLabel price'>Listing Price: $</label>
-                        <input type='number' name='listingPrice' id='listingPrice' min='1' max='99999999' step='1' value='" . $row["ListingPrice"] . "' required><br>
-                        <img src=\"Listing_Photos/defaultCarImageSquare.jpg\" . $imgUrl . alt=\"Default Image\" style=\"width:400px;height:400px;\"><br>
-                        <textarea name='listingDesc' id='listingDesc'>" . $row["ListingDesc"] . "</textarea>
+                    <div id=\"container\" class=\"flex flex-row flex-wrap\">
+                    <div id=\"img\" class=\"mr-10 ml-auto\">
+                        <img class=\"rounded-md my-10\" src=\"/" . $imgUrl . "\" alt=\"Default Image\" onerror=\"this.onerror=null; this.src='/Listing_Photos/defaultCarImageSquare.jpg'\" style=\"width:600px;height:500px;\">
+                    </div>
+                    <div id=\"listinginfo\" class=\"mr-auto ml-10 m-5 relative\">
+                        <h1 class=\"text-xl font-bold\"> " . $row["ListingYear"] . " " . $row["ListingMake"] . " " . $row["ListingModel"] . " </h1>
+                        <label for='listingPrice' class='listingLabel price'>$</label>
+                        <input class=\"border-black border-2 rounded-md\" type='number' name='listingPrice' id='listingPrice' min='1' max='99999999' step='1' value='" . $row["ListingPrice"] . "' required><br>
+                        <textarea class=\"max-h-96 py-1 px-1.5 shadow-sm border-black border-2 rounded-sm\" name='listingDesc' id='listingDesc'>" . $row["ListingDesc"] . "</textarea>
+                        <br><input class=\"mx-14 py-2 px-3 bg-black rounded-md text-white text-sm shadow hover:opacity-75\" type=\"submit\" name=\"update\" value=\"Update\">
+                    </div>
                     </div>";
-                    ?>
-                    <input type="submit" name="update" value="Update">
-                    <?php
-                        $listingPrice = $_POST["listingPrice"];
-                        $listingDesc = $_POST["listingDesc"];
+                    $listingPrice = $_POST["listingPrice"];
+                    $listingDesc = $_POST["listingDesc"];
 
-                        if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["update"])) {
-                            $updateListing = $conn->prepare("UPDATE ListingInfo SET ListingDesc=?, ListingPrice=? WHERE ListingID=" . $listingID . ";");
-                            $updateListing->bind_param("si", $listingDesc, $listingPrice);
-                            $updateListing->execute();
-                            echo "<meta http-equiv='refresh' content='0'>";
-                        }
-                    ?>
-                    </form>
+                    if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["update"])) {
+                        $updateListing = $conn->prepare("UPDATE ListingInfo SET ListingDesc=?, ListingPrice=? WHERE ListingID=" . $listingID . ";");
+                        $updateListing->bind_param("si", $listingDesc, $listingPrice);
+                        $updateListing->execute();
+                        echo "<meta http-equiv='refresh' content='0'>";
+                    }
+                ?>
+                </form>
                     
-                    <?php
+                <?php
                 }
             }
         ?>

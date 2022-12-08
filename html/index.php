@@ -32,10 +32,10 @@ if (!$conn) {
 
     <div class="mainContentDiv">
       <div class="homMainPageTitle">
-        <h1>This is a title for stuff about our project</h1>
+        <h1>CarGos - Where your car will go(somewhere else)</h1>
       </div>
       <div class="homeMainPageBody">
-        <p>This is a bunch of text explaining stuff about our project</p>
+        <p>This project was inspired by online marketplaces such as Facebook Marketplace and Offerup in order to create a better, car-oriented solution.</p>
       </div>
     </div>
 
